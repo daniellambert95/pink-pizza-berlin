@@ -9,8 +9,8 @@ const menuData = [
     },
     name: 'Pizza Margherita',
     description: {
-      en: 'Enjoyment to the last crust',
-      de: 'Genuss bis zur letzten Kruste'
+      en: 'Enjoyment to the last bite',
+      de: 'Genuss bis zur letzten Bisskante'
     },
     image_url: 'https://imageproxy.wolt.com/assets/679c8c27a688f466affe33be',
     local_image_path: 'images/pink_pizza_5._pizza_margherita.jpg'
