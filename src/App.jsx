@@ -39,7 +39,7 @@ const translations = {
       sendMessage: 'Send a Message',
       addressText: 'Am Friedrichshain 33\nPrenzlauerberg 10407',
       phoneNumber: '+49 30 123 4567',
-      emailAddress: 'hello@pinkpizza.com',
+      emailAddress: 'pinkpizzaberlin@gmail.com',
       formFields: {
         name: 'Name',
         email: 'Email',
@@ -96,7 +96,7 @@ const translations = {
       sendMessage: 'Nachricht senden',
       addressText: 'Am Friedrichshain 33\nPrenzlauerberg 10407',
       phoneNumber: '+49 30 123 4567',
-      emailAddress: 'hello@pinkpizza.com',
+      emailAddress: 'pinkpizzaberlin@gmail.com',
       formFields: {
         name: 'Name',
         email: 'E-Mail',
