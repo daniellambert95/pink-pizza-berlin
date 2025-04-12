@@ -15,7 +15,7 @@ const translations = {
     },
     about: {
       title: 'The Berlin Dream, Pizza in a Späti',
-      paragraph1: 'Pink Pizza began when Turkish brothers Engin and Daniel transformed a section of their Späti shop into a pizzeria. Their love for bold flavors and warm hospitality quickly won hearts in the neighborhood.',
+      paragraph1: 'Pink Pizza began when Turkish brothers Engin and Engin2 transformed a section of their Späti shop into a pizzeria. Their love for bold flavors and warm hospitality quickly won hearts in the neighborhood.',
       paragraph2: 'More than just pizza, they created a community space where guests can grab a beer from the shop while enjoying their freshly-made pizza-pies. This unique blend of convenience and quality defines the Pink Pizza experience.',
       learnMore: 'Our Story'
     },
@@ -72,7 +72,7 @@ const translations = {
     },
     about: {
       title: 'Der Berliner Traum, Pizza im Späti',
-      paragraph1: 'Pink Pizza entstand, als die türkischen Brüder Engin und Daniel eine Ecke ihres Spätis in eine Pizzeria verwandelten. Ihre Liebe zu kräftigen Aromen und herzlicher Gastfreundschaft gewann schnell die Herzen der Nachbarschaft.',
+      paragraph1: 'Pink Pizza entstand, als die türkischen Brüder Engin und Engin2 eine Ecke ihres Spätis in eine Pizzeria verwandelten. Ihre Liebe zu kräftigen Aromen und herzlicher Gastfreundschaft gewann schnell die Herzen der Nachbarschaft.',
       paragraph2: 'Mehr als nur Pizza haben sie einen Gemeinschaftsraum geschaffen, in dem Gäste ein Bier aus dem Laden genießen können, während sie ihre frisch zubereiteten Pizzen genießen. Diese einzigartige Mischung aus Komfort und Qualität definiert das Pink Pizza-Erlebnis.',
       learnMore: 'Unsere Geschichte'
     },
