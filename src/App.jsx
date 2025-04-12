@@ -662,7 +662,7 @@ const Location = ({ t }) => {
                 <Mail className="mr-4 text-pink-500 flex-shrink-0" />
                 <div>
                   <h4 className="font-semibold text-gray-800 mb-1">{t?.location?.email || 'Email'}</h4>
-                  <p className="text-gray-600">{t?.location?.emailAddress || 'hello@pinkpizza.com'}</p>
+                  <p className="text-gray-600">{t?.location?.emailAddress || 'pinkpizzaberlin@gmail.com'}</p>
                 </div>
               </div>
             </div>
