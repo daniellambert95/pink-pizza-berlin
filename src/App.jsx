@@ -5,7 +5,7 @@ import { menuData, menuByCategory } from './data/menuData';
 // Language translations
 const translations = {
   en: {
-    navItems: ['Home', 'About', 'Menu', 'Testimonials', 'Contact'],
+    navItems: ['Home', 'About', 'Menu', 'Reviews', 'Contact'],
     orderButtons: {
       wolt: 'Order on Wolt',
       lieferando: 'Order on Lieferando'
@@ -21,11 +21,11 @@ const translations = {
     },
     menu: {
       title: 'Our Menu',
-      description: 'Explore our selection of artisanal pizzas crafted with premium ingredients and bold flavor combinations.',
+      description: 'Explore our selection of artisanal pizzas and fresh salads crafted with premium ingredients and bold flavor combinations.',
       viewFullMenu: 'View Full Menu',
       addToOrder: 'Add to Order'
     },
-    testimonials: {
+    reviews: {
       title: 'What Our Customers Say',
       description: 'Don\'t just take our word for it. Here\'s what pizza lovers are saying about their Pink Pizza experience.'
     },
@@ -54,10 +54,6 @@ const translations = {
       hours: {
         weekdays: 'Monday - Sunday: 11am - 11.30pm'
       },
-      newsletter: 'Newsletter',
-      subscribeText: 'Subscribe to get special offers and updates.',
-      emailPlaceholder: 'Your email',
-      join: 'Join',
       rights: 'All rights reserved.'
     }
   },
@@ -78,11 +74,11 @@ const translations = {
     },
     menu: {
       title: 'Unsere Speisekarte',
-      description: 'Entdecken Sie unsere Auswahl an handwerklich hergestellten Pizzen mit erstklassigen Zutaten und kühnen Geschmackskombinationen.',
+      description: 'Entdecken Sie unsere Auswahl an handwerklich hergestellten Pizzen und frischen Salaten mit erstklassigen Zutaten und kühnen Geschmackskombinationen.',
       viewFullMenu: 'Vollständige Speisekarte',
       addToOrder: 'Zur Bestellung hinzufügen'
     },
-    testimonials: {
+    reviews: {
       title: 'Was unsere Kunden sagen',
       description: 'Nehmen Sie nicht nur unser Wort. Hier ist, was Pizza-Liebhaber über ihr Pink Pizza-Erlebnis sagen.'
     },
@@ -146,7 +142,7 @@ const App = () => {
         <Hero t={t} />
         <About t={t} />
         <MenuSection t={t} language={language} />
-        <Testimonials t={t} />
+        <Reviews t={t} language={language} />
         <Location t={t} />
       </main>
       <Footer t={t} language={language} />
@@ -177,7 +173,7 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen, language, toggleLanguage, t }) => {
             {t?.navItems?.map((item, index) => (
               <li key={index}>
                 <a 
-                  href={`#${['home', 'about', 'menu', 'testimonials', 'contact'][index]}`} 
+                  href={`#${['home', 'about', 'menu', 'reviews', 'contact'][index]}`} 
                   className="text-gray-700 hover:text-pink-500 transition duration-300 font-medium"
                 >
                   {item}
@@ -245,7 +241,7 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen, language, toggleLanguage, t }) => {
             {t?.navItems?.map((item, index) => (
               <li key={index}>
                 <a 
-                  href={`#${['home', 'about', 'menu', 'testimonials', 'contact'][index]}`}
+                  href={`#${['home', 'about', 'menu', 'reviews', 'contact'][index]}`}
                   className="text-gray-700 block py-2 hover:text-pink-500 transition duration-300"
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -395,6 +391,16 @@ const MenuSection = ({ t, language }) => {
   const categorizedMenu = menuByCategory(language);
   const categories = Object.keys(categorizedMenu);
 
+  // Price display function
+  const getCategoryPrice = (category) => {
+    if (category.includes('PIZZA') || category.includes('PIZZEN')) {
+      return language === 'en' ? 'All pizzas 10€' : 'Alle Pizzen 10€';
+    } else if (category.includes('SALAD') || category.includes('SALATE')) {
+      return language === 'en' ? 'All salads 8€' : 'Alle Salate 8€';
+    }
+    return '';
+  };
+
   return (
     <section id="menu" className="py-20 bg-white text-gray-800">
       <div className="container mx-auto px-4">
@@ -409,9 +415,18 @@ const MenuSection = ({ t, language }) => {
         
         {categories.map((category) => (
           <div key={category} className="mb-16">
-            <h3 className="text-2xl font-bold mb-8 text-center">
-              <span className="border-b-2 border-pink-500 pb-2">{category}</span>
-            </h3>
+            <div className="mb-8 text-center flex flex-col items-center">
+              <h3 className="text-2xl font-bold pb-2 text-center border-b-2 border-pink-500 inline-block">
+                {category}
+              </h3>
+              {/* Price display */}
+              {getCategoryPrice(category) && (
+                <div className="mt-3 bg-gray-100 text-gray-800 px-4 py-1 rounded-full text-sm font-medium inline-flex items-center">
+                  <span className="inline-block mr-1">💰</span>
+                  {getCategoryPrice(category)}
+                </div>
+              )}
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {categorizedMenu[category].map((item) => (
@@ -436,8 +451,19 @@ const MenuItem = ({ item, language, t }) => {
   // Get fallback image if item.image_url is empty
   const imageUrl = item.image_url || 'https://via.placeholder.com/400x300?text=Coming+Soon';
   
+  // Determine price based on category
+  const isPizza = item.category.en.includes('PIZZA') || item.category.de.includes('PIZZEN');
+  const isSalad = item.category.en.includes('SALAD') || item.category.de.includes('SALATE');
+  const price = isPizza ? '10€' : isSalad ? '8€' : '';
+  
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-md transform transition duration-300 hover:shadow-lg hover:-translate-y-2 border border-gray-100">
+    <div className="bg-white rounded-xl overflow-hidden shadow-md transform transition duration-300 hover:shadow-lg hover:-translate-y-2 border border-gray-100 relative">
+      {/* Price Badge */}
+      {price && (
+        <div className="absolute top-4 right-4 bg-pink-500 text-white px-3 py-1 rounded-full font-bold shadow-lg z-10">
+          {price}
+        </div>
+      )}
       <div className="h-48 overflow-hidden">
         <img 
           src={imageUrl} 
@@ -455,9 +481,9 @@ const MenuItem = ({ item, language, t }) => {
   );
 };
 
-// Testimonials Component
-const Testimonials = ({ t }) => {
-  const [testimonials, setTestimonials] = useState([]);
+// Reviews Component
+const Reviews = ({ t }) => {
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -500,7 +526,7 @@ const Testimonials = ({ t }) => {
           }
         ];
         
-        setTestimonials(reviewsData);
+        setReviews(reviewsData);
         setLoading(false);
       } catch (err) {
         console.error("Error fetching reviews:", err);
@@ -514,7 +540,7 @@ const Testimonials = ({ t }) => {
   }, []);
 
   return (
-    <section id="testimonials" className="py-20 bg-gray-50 relative">
+    <section id="reviews" className="py-20 bg-gray-50 relative">
       <div className="absolute top-0 left-0 w-full h-48 bg-gradient-to-b from-white to-transparent"></div>
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
@@ -524,7 +550,7 @@ const Testimonials = ({ t }) => {
             <span className="text-gray-800"> Say</span>
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-            {t?.testimonials?.description || "Don't just take our word for it. Here's what pizza lovers are saying about their Pink Pizza experience."}
+            {t?.reviews?.description || "Don't just take our word for it. Here's what pizza lovers are saying about their Pink Pizza experience."}
           </p>
         </div>
         
@@ -544,7 +570,7 @@ const Testimonials = ({ t }) => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial) => (
+            {reviews.map((testimonial) => (
               <TestimonialCard key={testimonial.id} testimonial={testimonial} />
             ))}
           </div>
@@ -713,7 +739,7 @@ const Footer = ({ t, language }) => {
   return (
     <footer className="bg-gray-900 pt-16 pb-8">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           <div>
             <div className="flex items-center mb-6">
               {/* <img 
@@ -724,7 +750,7 @@ const Footer = ({ t, language }) => {
               <span className="text-pink-500 font-bold text-2xl">Pink Pizza</span>
             </div>
             <p className="text-gray-400 mb-6">
-              {t.hero.tagline} {t.footer.subscribeText.split('.')[0]}.
+              {t.hero.tagline}
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-pink-500 transition duration-300">
@@ -745,7 +771,7 @@ const Footer = ({ t, language }) => {
               {t.navItems.map((item, index) => (
                 <li key={index}>
                   <a 
-                    href={`#${['home', 'about', 'menu', 'testimonials', 'contact'][index]}`} 
+                    href={`#${['home', 'about', 'menu', 'reviews', 'contact'][index]}`} 
                     className="text-gray-400 hover:text-pink-400 transition duration-300"
                   >
                     {item}
@@ -759,35 +785,13 @@ const Footer = ({ t, language }) => {
             <h4 className="text-white font-bold text-lg mb-6">{t.footer.openingHours}</h4>
             <ul className="space-y-3 text-gray-400">
               <li>{t.footer.hours.weekdays}</li>
-              <li>{t.footer.hours.weekend}</li>
-              <li>{t.footer.hours.sunday}</li>
             </ul>
-          </div>
-          
-          <div>
-            <h4 className="text-white font-bold text-lg mb-6">{t.footer.newsletter}</h4>
-            <p className="text-gray-400 mb-4">
-              {t.footer.subscribeText}
-            </p>
-            <form className="flex">
-              <input 
-                type="email" 
-                placeholder={t.footer.emailPlaceholder} 
-                className="bg-gray-800 rounded-l-lg px-4 py-2 text-white focus:outline-none flex-grow"
-              />
-              <button 
-                type="submit" 
-                className="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-r-lg font-medium transition duration-300"
-              >
-                {t.footer.join}
-              </button>
-            </form>
           </div>
         </div>
         
         <div className="border-t border-gray-800 pt-8">
           <p className="text-gray-500 text-center">
-            &copy; {new Date().getFullYear()} Pink Pizza. {t.footer.rights}
+            &copy; {new Date().getFullYear()} Pink Pizza Berlin. {t.footer.rights}
           </p>
         </div>
       </div>
