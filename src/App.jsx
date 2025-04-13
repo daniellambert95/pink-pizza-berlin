@@ -7,8 +7,10 @@ const translations = {
   en: {
     navItems: ['Home', 'About', 'Menu', 'Reviews', 'Contact'],
     orderButtons: {
+      orderNow: 'Order Now',
       wolt: 'Order on Wolt',
-      lieferando: 'Order on Lieferando'
+      lieferando: 'Order on Lieferando',
+      ubereats: 'Order on Uber Eats'
     },
     hero: {
       tagline: 'Where flavor meets flair.'
@@ -60,8 +62,10 @@ const translations = {
   de: {
     navItems: ['Startseite', 'Über uns', 'Speisekarte', 'Bewertungen', 'Kontakt'],
     orderButtons: {
+      orderNow: 'Jetzt bestellen',
       wolt: 'Bestellen auf Wolt',
-      lieferando: 'Bestellen auf Lieferando'
+      lieferando: 'Bestellen auf Lieferando',
+      ubereats: 'Bestellen auf Uber Eats'
     },
     hero: {
       tagline: 'Wo Geschmack auf Stil trifft.'
@@ -120,6 +124,8 @@ const translations = {
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [language, setLanguage] = useState('de');
+  const [showNavOrderOptions, setShowNavOrderOptions] = useState(false);
+  const [showHeroOrderOptions, setShowHeroOrderOptions] = useState(false);
 
   // Toggle language function
   const toggleLanguage = () => {
@@ -136,10 +142,16 @@ const App = () => {
         setIsMenuOpen={setIsMenuOpen} 
         language={language}
         toggleLanguage={toggleLanguage}
+        showOrderOptions={showNavOrderOptions}
+        setShowOrderOptions={setShowNavOrderOptions}
         t={t}
       />
       <main>
-        <Hero t={t} />
+        <Hero 
+          t={t} 
+          showOrderOptions={showHeroOrderOptions} 
+          setShowOrderOptions={setShowHeroOrderOptions} 
+        />
         <About t={t} />
         <MenuSection t={t} language={language} />
         <Reviews t={t} language={language} />
@@ -151,8 +163,32 @@ const App = () => {
 };
 
 // Navbar Component
-const Navbar = ({ isMenuOpen, setIsMenuOpen, language, toggleLanguage, t }) => {
+const Navbar = ({ isMenuOpen, setIsMenuOpen, language, toggleLanguage, showOrderOptions, setShowOrderOptions, t }) => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  
+  // Function to handle dropdown toggle
+  const toggleOrderOptions = (e) => {
+    e.preventDefault();
+    setShowOrderOptions(!showOrderOptions);
+  };
+  
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const dropdownContainer = document.getElementById('navbar-dropdown-container');
+      if (dropdownContainer && !dropdownContainer.contains(event.target)) {
+        setShowOrderOptions(false);
+      }
+    };
+
+    if (showOrderOptions) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showOrderOptions, setShowOrderOptions]);
   
   return (
     <nav className="fixed w-full z-50 py-5 transition-all duration-300 bg-white backdrop-blur-sm py-2 shadow-lg">
@@ -183,7 +219,7 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen, language, toggleLanguage, t }) => {
           </ul>
         </div>
         
-        {/* Order Buttons and Language Toggle */}
+        {/* Order Button and Language Toggle */}
         <div className="hidden md:flex items-center">
           {/* Language toggle */}
           <button 
@@ -194,25 +230,66 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen, language, toggleLanguage, t }) => {
             <span>{language === 'en' ? 'DE' : 'EN'}</span>
           </button>
           
-          <a 
-            href="https://wolt.com/en/deu/berlin/restaurant/pink-pizza" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="mr-2"
-          >
-            <button className="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded-lg font-medium transition duration-300 text-white">
-              {t?.orderButtons?.wolt || 'Order on Wolt'}
+          {/* Order Now button with dropdown */}
+          <div id="navbar-dropdown-container" className="relative">
+            <button 
+              onClick={toggleOrderOptions}
+              className="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded-lg font-medium transition duration-300 text-white flex items-center"
+            >
+              {t?.orderButtons?.orderNow || 'Order Now'}
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className={`h-4 w-4 ml-2 transition-transform ${showOrderOptions ? 'rotate-180' : ''}`} 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
             </button>
-          </a>
-          <a 
-            href="https://www.lieferando.de/speisekarte/pink-pizza-berlin" 
-            target="_blank" 
-            rel="noopener noreferrer"
-          >
-            <button className="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg font-medium transition duration-300 text-white">
-              {t?.orderButtons?.lieferando || 'Order on Lieferando'}
-            </button>
-          </a>
+            
+            {/* Dropdown Menu */}
+            {showOrderOptions && (
+              <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl z-20 overflow-hidden">
+                <a 
+                  href="https://wolt.com/en/deu/berlin/restaurant/pink-pizza" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors border-b border-gray-100"
+                  onClick={() => setShowOrderOptions(false)}
+                >
+                  <div className="w-8 h-8 mr-3 flex items-center justify-center rounded-full bg-blue-400 text-white">
+                    <span className="text-xs font-bold">W</span>
+                  </div>
+                  {t?.orderButtons?.wolt || 'Order on Wolt'}
+                </a>
+                <a 
+                  href="https://www.lieferando.de/speisekarte/pink-pizza-berlin" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors border-b border-gray-100"
+                  onClick={() => setShowOrderOptions(false)}
+                >
+                  <div className="w-8 h-8 mr-3 flex items-center justify-center rounded-full bg-orange-500 text-white">
+                    <span className="text-xs font-bold">L</span>
+                  </div>
+                  {t?.orderButtons?.lieferando || 'Order on Lieferando'}
+                </a>
+                <a 
+                  href="https://www.ubereats.com/de/store/pink-pizza-berlin" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors"
+                  onClick={() => setShowOrderOptions(false)}
+                >
+                  <div className="w-8 h-8 mr-3 flex items-center justify-center rounded-full bg-green-700 text-white">
+                    <span className="text-xs font-bold">U</span>
+                  </div>
+                  {t?.orderButtons?.ubereats || 'Order on Uber Eats'}
+                </a>
+              </div>
+            )}
+          </div>
         </div>
         
         {/* Mobile Menu Button */}
@@ -249,29 +326,66 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen, language, toggleLanguage, t }) => {
                 </a>
               </li>
             )) || []}
+            
+            {/* Single order button for mobile */}
             <li className="pt-2">
-              <a 
-                href="https://wolt.com/en/deu/berlin/restaurant/pink-pizza" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="w-full block"
+              <button 
+                onClick={toggleOrderOptions}
+                className="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded-lg font-medium w-full transition duration-300 mb-2 text-white flex items-center justify-center"
               >
-                <button className="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded-lg font-medium w-full transition duration-300 mb-2 text-white">
-                  {t?.orderButtons?.wolt || 'Order on Wolt'}
-                </button>
-              </a>
-            </li>
-            <li>
-              <a 
-                href="https://www.lieferando.de/speisekarte/pink-pizza-restaurant" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-full block"
-              >
-                <button className="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg font-medium w-full transition duration-300 text-white">
-                  {t?.orderButtons?.lieferando || 'Order on Lieferando'}
-                </button>
-              </a>
+                {t?.orderButtons?.orderNow || 'Order Now'}
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  className={`h-4 w-4 ml-2 transition-transform ${showOrderOptions ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {/* Mobile dropdown options */}
+              {showOrderOptions && (
+                <div className="mt-2 bg-white rounded-lg shadow-inner overflow-hidden">
+                  <a 
+                    href="https://wolt.com/en/deu/berlin/restaurant/pink-pizza" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors border-b border-gray-100"
+                    onClick={() => { setShowOrderOptions(false); setIsMenuOpen(false); }}
+                  >
+                    <div className="w-8 h-8 mr-3 flex items-center justify-center rounded-full bg-blue-400 text-white">
+                      <span className="text-xs font-bold">W</span>
+                    </div>
+                    {t?.orderButtons?.wolt || 'Order on Wolt'}
+                  </a>
+                  <a 
+                    href="https://www.lieferando.de/speisekarte/pink-pizza-berlin" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors border-b border-gray-100"
+                    onClick={() => { setShowOrderOptions(false); setIsMenuOpen(false); }}
+                  >
+                    <div className="w-8 h-8 mr-3 flex items-center justify-center rounded-full bg-orange-500 text-white">
+                      <span className="text-xs font-bold">L</span>
+                    </div>
+                    {t?.orderButtons?.lieferando || 'Order on Lieferando'}
+                  </a>
+                  <a 
+                    href="https://www.ubereats.com/de/store/pink-pizza-berlin" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors"
+                    onClick={() => { setShowOrderOptions(false); setIsMenuOpen(false); }}
+                  >
+                    <div className="w-8 h-8 mr-3 flex items-center justify-center rounded-full bg-green-700 text-white">
+                      <span className="text-xs font-bold">U</span>
+                    </div>
+                    {t?.orderButtons?.ubereats || 'Order on Uber Eats'}
+                  </a>
+                </div>
+              )}
             </li>
           </ul>
         </div>
@@ -281,7 +395,31 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen, language, toggleLanguage, t }) => {
 };
 
 // Hero Component
-const Hero = ({ t }) => {
+const Hero = ({ t, showOrderOptions, setShowOrderOptions }) => {
+  // Toggle order options dropdown
+  const toggleOrderOptions = (e) => {
+    e.preventDefault();
+    setShowOrderOptions(!showOrderOptions);
+  };
+  
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const dropdownContainer = document.getElementById('hero-dropdown-container');
+      if (dropdownContainer && !dropdownContainer.contains(event.target)) {
+        setShowOrderOptions(false);
+      }
+    };
+
+    if (showOrderOptions) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showOrderOptions, setShowOrderOptions]);
+  
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
       <div className="absolute inset-0 z-0">
@@ -306,25 +444,66 @@ const Hero = ({ t }) => {
           <p className="text-xl md:text-2xl mb-8 text-white">
             {t?.hero?.tagline || 'Where flavor meets flair.'}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <a 
-              href="https://wolt.com/en/deu/berlin/restaurant/pink-pizza" 
-              target="_blank" 
-              rel="noopener noreferrer"
+          
+          {/* Order Now with dropdown */}
+          <div id="hero-dropdown-container" className="relative">
+            <button 
+              onClick={toggleOrderOptions}
+              className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-lg font-medium text-lg transform transition duration-300 hover:scale-105 flex items-center"
             >
-              <button className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-lg font-medium text-lg transform transition duration-300 hover:scale-105">
-                {t?.orderButtons?.wolt || 'Order on Wolt'}
-              </button>
-            </a>
-            <a 
-              href="https://www.lieferando.de/speisekarte/pink-pizza-berlin" 
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-medium text-lg transform transition duration-300 hover:scale-105">
-                {t?.orderButtons?.lieferando || 'Order on Lieferando'}
-              </button>
-            </a>
+              {t?.orderButtons?.orderNow || 'Order Now'}
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className={`h-5 w-5 ml-2 transition-transform ${showOrderOptions ? 'rotate-180' : ''}`} 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            
+            {/* Dropdown Menu */}
+            {showOrderOptions && (
+              <div className="absolute left-1/2 transform -translate-x-1/2 mt-4 w-64 bg-white rounded-lg shadow-xl z-20 overflow-hidden">
+                <a 
+                  href="https://wolt.com/en/deu/berlin/restaurant/pink-pizza" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors border-b border-gray-100"
+                  onClick={() => setShowOrderOptions(false)}
+                >
+                  <div className="w-10 h-10 mr-3 flex items-center justify-center rounded-full bg-blue-400 text-white">
+                    <span className="text-sm font-bold">W</span>
+                  </div>
+                  <span className="font-medium">{t?.orderButtons?.wolt || 'Order on Wolt'}</span>
+                </a>
+                <a 
+                  href="https://www.lieferando.de/speisekarte/pink-pizza-berlin" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors border-b border-gray-100"
+                  onClick={() => setShowOrderOptions(false)}
+                >
+                  <div className="w-10 h-10 mr-3 flex items-center justify-center rounded-full bg-orange-500 text-white">
+                    <span className="text-sm font-bold">L</span>
+                  </div>
+                  <span className="font-medium">{t?.orderButtons?.lieferando || 'Order on Lieferando'}</span>
+                </a>
+                <a 
+                  href="https://www.ubereats.com/de/store/pink-pizza-berlin" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors"
+                  onClick={() => setShowOrderOptions(false)}
+                >
+                  <div className="w-10 h-10 mr-3 flex items-center justify-center rounded-full bg-green-700 text-white">
+                    <span className="text-sm font-bold">U</span>
+                  </div>
+                  <span className="font-medium">{t?.orderButtons?.ubereats || 'Order on Uber Eats'}</span>
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -391,6 +570,9 @@ const MenuSection = ({ t, language }) => {
   const categorizedMenu = menuByCategory(language);
   const categories = Object.keys(categorizedMenu);
 
+  // State to manage dropdown visibility for each category
+  const [activeCategoryDropdown, setActiveCategoryDropdown] = useState(null);
+
   // Price display function
   const getCategoryPrice = (category) => {
     if (category.includes('PIZZA') || category.includes('PIZZEN')) {
@@ -400,6 +582,33 @@ const MenuSection = ({ t, language }) => {
     }
     return '';
   };
+
+  // Toggle dropdown for a specific category
+  const toggleCategoryDropdown = (category) => {
+    if (activeCategoryDropdown === category) {
+      setActiveCategoryDropdown(null);
+    } else {
+      setActiveCategoryDropdown(category);
+    }
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const dropdownContainer = document.getElementById(`category-dropdown-${activeCategoryDropdown}`);
+      if (dropdownContainer && !dropdownContainer.contains(event.target)) {
+        setActiveCategoryDropdown(null);
+      }
+    };
+
+    if (activeCategoryDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [activeCategoryDropdown]);
 
   return (
     <section id="menu" className="py-20 bg-white text-gray-800">
@@ -433,6 +642,72 @@ const MenuSection = ({ t, language }) => {
                 <MenuItem key={item.id} item={item} language={language} t={t} />
               ))}
             </div>
+
+            {/* Order Now button for each category */}
+            {(category.includes('PIZZA') || category.includes('PIZZEN') || 
+              category.includes('SALAD') || category.includes('SALATE')) && (
+              <div className="mt-12 text-center">
+                <div id={`category-dropdown-${category}`} className="relative inline-block">
+                  <button 
+                    onClick={() => toggleCategoryDropdown(category)}
+                    className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-lg font-medium text-lg transform transition duration-300 hover:scale-105 flex items-center mx-auto"
+                  >
+                    {t?.orderButtons?.orderNow || 'Order Now'}
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      className={`h-5 w-5 ml-2 transition-transform ${activeCategoryDropdown === category ? 'rotate-180' : ''}`} 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  
+                  {/* Dropdown Menu */}
+                  {activeCategoryDropdown === category && (
+                    <div className="absolute left-1/2 transform -translate-x-1/2 mt-4 w-64 bg-white rounded-lg shadow-xl z-20 overflow-hidden">
+                      <a 
+                        href="https://wolt.com/en/deu/berlin/restaurant/pink-pizza" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors border-b border-gray-100"
+                        onClick={() => setActiveCategoryDropdown(null)}
+                      >
+                        <div className="w-10 h-10 mr-3 flex items-center justify-center rounded-full bg-blue-400 text-white">
+                          <span className="text-sm font-bold">W</span>
+                        </div>
+                        <span className="font-medium">{t?.orderButtons?.wolt || 'Order on Wolt'}</span>
+                      </a>
+                      <a 
+                        href="https://www.lieferando.de/speisekarte/pink-pizza-berlin" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors border-b border-gray-100"
+                        onClick={() => setActiveCategoryDropdown(null)}
+                      >
+                        <div className="w-10 h-10 mr-3 flex items-center justify-center rounded-full bg-orange-500 text-white">
+                          <span className="text-sm font-bold">L</span>
+                        </div>
+                        <span className="font-medium">{t?.orderButtons?.lieferando || 'Order on Lieferando'}</span>
+                      </a>
+                      <a 
+                        href="https://www.ubereats.com/de/store/pink-pizza-berlin" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors"
+                        onClick={() => setActiveCategoryDropdown(null)}
+                      >
+                        <div className="w-10 h-10 mr-3 flex items-center justify-center rounded-full bg-green-700 text-white">
+                          <span className="text-sm font-bold">U</span>
+                        </div>
+                        <span className="font-medium">{t?.orderButtons?.ubereats || 'Order on Uber Eats'}</span>
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         ))}
         
@@ -482,10 +757,19 @@ const MenuItem = ({ item, language, t }) => {
 };
 
 // Reviews Component
-const Reviews = ({ t }) => {
+const Reviews = ({ t, language }) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Split the title for styling
+  const reviewsTitle = t?.reviews?.title || 'What Our Customers Say';
+  const titleParts = reviewsTitle.split(' ');
+  const middleIndex = Math.floor(titleParts.length / 2);
+  
+  const firstPart = titleParts.slice(0, middleIndex).join(' ');
+  const highlightPart = titleParts[middleIndex];
+  const lastPart = titleParts.slice(middleIndex + 1).join(' ');
 
   useEffect(() => {
     // This function would normally fetch reviews from an API
@@ -545,9 +829,9 @@ const Reviews = ({ t }) => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
-            <span className="text-gray-800">What Our </span>
-            <span className="text-pink-500">Customers</span>
-            <span className="text-gray-800"> Say</span>
+            <span className="text-gray-800">{firstPart} </span>
+            <span className="text-pink-500">{highlightPart}</span>
+            <span className="text-gray-800"> {lastPart}</span>
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             {t?.reviews?.description || "Don't just take our word for it. Here's what pizza lovers are saying about their Pink Pizza experience."}
