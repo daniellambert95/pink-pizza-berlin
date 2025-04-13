@@ -276,7 +276,7 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen, language, toggleLanguage, showOrder
                   {t?.orderButtons?.lieferando || 'Order on Lieferando'}
                 </a>
                 <a 
-                  href="https://www.ubereats.com/de/store/pink-pizza-berlin" 
+                  href="https://www.ubereats.com/de-en/store/pink-pizza/sJUpevW5WyO_Y5OylBdEEQ?srsltid=AfmBOooIDfxadbBf-rQNb_8yNpfEtq336VQ_ehrAsvXyGb__rWXI1wKq" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors"
@@ -373,7 +373,7 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen, language, toggleLanguage, showOrder
                     {t?.orderButtons?.lieferando || 'Order on Lieferando'}
                   </a>
                   <a 
-                    href="https://www.ubereats.com/de/store/pink-pizza-berlin" 
+                    href="https://www.ubereats.com/de-en/store/pink-pizza/sJUpevW5WyO_Y5OylBdEEQ?srsltid=AfmBOooIDfxadbBf-rQNb_8yNpfEtq336VQ_ehrAsvXyGb__rWXI1wKq" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors"
@@ -491,7 +491,7 @@ const Hero = ({ t, showOrderOptions, setShowOrderOptions }) => {
                   <span className="font-medium">{t?.orderButtons?.lieferando || 'Order on Lieferando'}</span>
                 </a>
                 <a 
-                  href="https://www.ubereats.com/de/store/pink-pizza-berlin" 
+                  href="https://www.ubereats.com/de-en/store/pink-pizza/sJUpevW5WyO_Y5OylBdEEQ?srsltid=AfmBOooIDfxadbBf-rQNb_8yNpfEtq336VQ_ehrAsvXyGb__rWXI1wKq" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors"
@@ -637,7 +637,7 @@ const MenuSection = ({ t, language }) => {
               )}
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {categorizedMenu[category].map((item) => (
                 <MenuItem key={item.id} item={item} language={language} t={t} />
               ))}
@@ -692,7 +692,7 @@ const MenuSection = ({ t, language }) => {
                         <span className="font-medium">{t?.orderButtons?.lieferando || 'Order on Lieferando'}</span>
                       </a>
                       <a 
-                        href="https://www.ubereats.com/de/store/pink-pizza-berlin" 
+                        href="https://www.ubereats.com/de-en/store/pink-pizza/sJUpevW5WyO_Y5OylBdEEQ?srsltid=AfmBOooIDfxadbBf-rQNb_8yNpfEtq336VQ_ehrAsvXyGb__rWXI1wKq" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="flex items-center px-4 py-3 text-gray-800 hover:bg-pink-50 transition-colors"
