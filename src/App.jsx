@@ -40,7 +40,7 @@ const translations = {
       email: 'Email',
       sendMessage: 'Send a Message',
       addressText: 'Am Friedrichshain 33\nPrenzlauerberg 10407',
-      phoneNumber: '+49 30 123 4567',
+      phoneNumber: '+49 1515 1831473',
       emailAddress: 'pinkpizzaberlin@gmail.com',
       formFields: {
         name: 'Name',
@@ -109,7 +109,7 @@ const translations = {
       quickLinks: 'Schnelllinks',
       openingHours: 'Öffnungszeiten',
       hours: {
-        weekdays: 'Montag - Sonntag: 12:00 - 23:00 Uhr'
+        weekdays: 'Montag - Sonntag: 11:00 - 23:45 Uhr'
       },
       newsletter: 'Newsletter',
       subscribeText: 'Abonnieren Sie, um Sonderangebote und Updates zu erhalten.',
@@ -964,7 +964,7 @@ const Location = ({ t }) => {
                 <Phone className="mr-4 text-pink-500 flex-shrink-0" />
                 <div>
                   <h4 className="font-semibold text-gray-800 mb-1">{t?.location?.phone || 'Phone'}</h4>
-                  <p className="text-gray-600">{t?.location?.phoneNumber || '+49 30 123 4567'}</p>
+                  <p className="text-gray-600">{t?.location?.phoneNumber || '+49 1515 1831473'}</p>
                 </div>
               </div>
               
@@ -1074,6 +1074,9 @@ const Footer = ({ t, language }) => {
         </div>
         
         <div className="border-t border-gray-800 pt-8">
+        <p className="text-gray-500 text-center">
+            Web Design by <a href="#" className="hover:text-pink-500 transition duration-300">Site & Sight</a>
+          </p>
           <p className="text-gray-500 text-center">
             &copy; {new Date().getFullYear()} Pink Pizza Berlin. {t.footer.rights}
           </p>
