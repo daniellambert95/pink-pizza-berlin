@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 
 const SEO = ({ 
   title, 
@@ -43,8 +42,8 @@ const SEO = ({
   const seoKeywords = keywords || 'Pink Pizza Berlin, Pizza Prenzlauer Berg, Pizza Lieferung Berlin, Späti Pizza, Pizza bestellen Berlin, Friedrichshain Pizza, authentische Pizza, handgemachte Pizza';
 
   return (
-    <Helmet>
-      {/* Primary Meta Tags */}
+    <>
+      {/* Primary Meta Tags - React 19 native support */}
       <title>{seoTitle}</title>
       <meta name="title" content={seoTitle} />
       <meta name="description" content={seoDescription} />
@@ -114,7 +113,7 @@ const SEO = ({
           })}
         </script>
       )}
-    </Helmet>
+    </>
   );
 };
 
