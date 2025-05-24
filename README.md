@@ -1,70 +1,221 @@
-# Getting Started with Create React App
+# Pink Pizza Berlin - SEO Optimized Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, SEO-optimized React website for Pink Pizza Berlin, a unique pizzeria located in a Späti in Prenzlauer Berg, Berlin.
 
-## Available Scripts
+## 🚀 SEO Optimizations Implemented
 
-In the project directory, you can run:
+### 1. **Meta Tags & HTML Structure**
 
-### `npm start`
+- ✅ Comprehensive meta tags with German and English support
+- ✅ Open Graph tags for social media sharing
+- ✅ Twitter Card meta tags
+- ✅ Canonical URLs
+- ✅ Proper HTML lang attribute (`lang="de"`)
+- ✅ Theme color matching brand (`#ec4899`)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 2. **Structured Data (Schema.org)**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- ✅ Restaurant schema with complete business information
+- ✅ Local business markup with address and coordinates
+- ✅ Opening hours specification
+- ✅ Menu schema for food items
+- ✅ Review schema for customer testimonials
+- ✅ Aggregate rating information
 
-### `npm test`
+### 3. **Technical SEO**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- ✅ Sitemap.xml with all important pages
+- ✅ Robots.txt with proper directives
+- ✅ PWA manifest.json optimized for restaurants
+- ✅ Dynamic SEO component using react-helmet-async
+- ✅ Proper homepage field in package.json
 
-### `npm run build`
+### 4. **Content Optimization**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- ✅ German-first content (primary market)
+- ✅ Local keywords: "Pizza Prenzlauer Berg", "Späti Pizza", "Pizza Berlin"
+- ✅ Location-specific content: "Am Friedrichshain 33"
+- ✅ Service keywords: "Wolt", "Lieferando", "Uber Eats"
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 5. **Local SEO**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- ✅ Complete NAP (Name, Address, Phone) information
+- ✅ Google Maps integration
+- ✅ Local business schema markup
+- ✅ Opening hours clearly displayed
+- ✅ Service area targeting (Berlin, Prenzlauer Berg)
 
-### `npm run eject`
+## 📱 Progressive Web App (PWA)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- ✅ Optimized manifest.json
+- ✅ Proper icons and screenshots
+- ✅ Restaurant category classification
+- ✅ Standalone display mode
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🔍 Key SEO Features
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Dynamic SEO Component
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The website uses a dynamic SEO component that provides section-specific meta tags:
 
-## Learn More
+- **Home**: Main landing page optimization
+- **Menu**: Food-specific keywords and menu schema
+- **Reviews**: Customer testimonial optimization
+- **Contact**: Local business contact optimization
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Multi-language Support
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Primary language: German (de)
+- Secondary language: English (en)
+- Proper hreflang implementation
 
-### Code Splitting
+### Local Business Information
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```json
+{
+  "name": "Pink Pizza Berlin",
+  "address": "Am Friedrichshain 33, 10407 Berlin",
+  "phone": "+49-15151831473",
+  "email": "pinkpizzaberlin@gmail.com",
+  "hours": "Monday - Sunday: 11:00 - 23:30",
+  "coordinates": "52.5234, 13.4437",
+  "googleMaps": "https://maps.app.goo.gl/tHRUPX944go3uUbU8"
+}
+```
 
-### Analyzing the Bundle Size
+## 🛠️ Development
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Prerequisites
 
-### Making a Progressive Web App
+- Node.js 16+
+- npm or yarn
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Installation
 
-### Advanced Configuration
+```bash
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Development Server
 
-### Deployment
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Build for Production
 
-### `npm run build` fails to minify
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🚀 Deployment
+
+### Build Output
+
+The optimized build includes:
+
+- Minified JavaScript and CSS
+- SEO-optimized HTML
+- Proper meta tags and structured data
+- Sitemap and robots.txt
+
+### Recommended Hosting
+
+- **Netlify**: Automatic deployments with form handling
+- **Vercel**: Optimized for React applications
+- **GitHub Pages**: Free hosting for static sites
+
+### Domain Configuration
+
+The website is configured for: `https://www.pinkpizza-berlin.de`
+
+Update the domain in:
+
+- `package.json` (homepage field)
+- `public/sitemap.xml`
+- `src/components/SEO.jsx` (baseUrl)
+
+## 📊 SEO Checklist
+
+### ✅ Completed Optimizations
+
+- [x] Meta tags and descriptions
+- [x] Open Graph and Twitter Cards
+- [x] Structured data markup
+- [x] Sitemap.xml
+- [x] Robots.txt
+- [x] Local business schema
+- [x] Mobile-friendly design
+- [x] Fast loading times
+- [x] Semantic HTML structure
+- [x] Alt tags for images
+- [x] Internal linking structure
+
+## 📈 Performance Metrics
+
+### Build Size (Gzipped)
+
+- JavaScript: 75.09 kB
+- CSS: 4.3 kB
+- Total: ~80 kB
+
+### SEO Score Targets
+
+- Google PageSpeed: 90+
+- SEO Score: 95+
+- Accessibility: 90+
+- Best Practices: 90+
+
+## 🎯 Target Keywords
+
+### Primary Keywords
+
+- Pink Pizza Berlin
+- Pizza Prenzlauer Berg
+- Späti Pizza Berlin
+- Pizza Lieferung Berlin
+
+### Secondary Keywords
+
+- Handgemachte Pizza Berlin
+- Pizza bestellen Berlin
+- Authentische Pizza Prenzlauer Berg
+- Pizza Friedrichshain
+
+### Long-tail Keywords
+
+- "Pizza im Späti Prenzlauer Berg"
+- "Beste Pizza Berlin Lieferung"
+- "Türkische Familie Pizza Berlin"
+- "Pizza bestellen Wolt Lieferando"
+
+## 📞 Contact & Business Information
+
+- **Website**: https://www.pinkpizza-berlin.de
+- **Address**: Am Friedrichshain 33, 10407 Berlin
+- **Phone**: +49 1515 1831473
+- **Email**: pinkpizzaberlin@gmail.com
+- **Hours**: Monday - Sunday, 11:00 - 23:30
+- **Google Maps**: [Pink Pizza Berlin](https://maps.app.goo.gl/tHRUPX944go3uUbU8)
+
+### Online Ordering
+
+- [Wolt](https://wolt.com/en/deu/berlin/restaurant/pink-pizza)
+- [Lieferando](https://www.lieferando.de/speisekarte/pink-pizza-berlin)
+- [Uber Eats](https://www.ubereats.com/de-en/store/pink-pizza/sJUpevW5WyO_Y5OylBdEEQ)
+
+## 🔧 Technical Stack
+
+- **Frontend**: React 19.1.0
+- **Styling**: Tailwind CSS
+- **SEO**: react-helmet-async
+- **Icons**: Lucide React
+- **Build Tool**: Create React App
+
+## 📝 License
+
+This project is proprietary to Pink Pizza Berlin.
+
+---
+
+**Built with ❤️ for Pink Pizza Berlin - Where flavor meets flair.**

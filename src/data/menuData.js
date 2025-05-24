@@ -12,7 +12,7 @@ const menuData = [
       en: 'Enjoyment to the last bite',
       de: 'Genuss bis zur letzten Bisskante'
     },
-    image_url: 'https://imageproxy.wolt.com/assets/679c8c27a688f466affe33be',
+    image_url: 'https://imageproxy.wolt.com/assets/679c8c1cb1ab310ee0c4b1b9',
     local_image_path: 'images/pink_pizza_5._pizza_margherita.jpg'
   },
   {
